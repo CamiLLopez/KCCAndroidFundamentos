@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">EntregaFundamentosAndroid</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="character_photo_description">Imagen de character from API</string>
+    <string name="title">Title</string>
+    <string name="actual_life">Actual Life</string>
+    <string name="damage">Damage!</string>
+    <string name="heal">Heal!</string>
+</resources>
