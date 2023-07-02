@@ -1,5 +1,6 @@
 package com.example.entregafundamentosandroid.ui.home.herosList.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,10 @@ class CharacterAdapter(private val callback: CharacterAdapterCallback):
 
         fun bind(item: Character) {
 
+            itemView.setOnClickListener {
+                callback.onCharacterClicked(item)
+            }
+
             with(binding){
 
             characterName.text = item.name
@@ -27,12 +32,6 @@ class CharacterAdapter(private val callback: CharacterAdapterCallback):
                 .resize(1240, 860)
                 .centerInside()
                 .into(characterPhoto)
-
-
-            root.setOnClickListener {
-
-                callback.onCharacterClicked(item)
-            }
             }
         }
 

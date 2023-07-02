@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.entregafundamentosandroid.data.model.Character
 import com.example.entregafundamentosandroid.databinding.FragmentCharacterListBinding
+import com.example.entregafundamentosandroid.ui.home.HomeActivity
 import com.example.entregafundamentosandroid.ui.home.SharedViewModel
 import com.example.entregafundamentosandroid.ui.home.herosList.adapter.CharacterAdapter
 import com.example.entregafundamentosandroid.ui.home.herosList.adapter.CharacterAdapterCallback
@@ -52,6 +53,9 @@ class CharacterListFragment : Fragment(), CharacterAdapterCallback {
                     is SharedViewModel.StateCharacter.Loading -> {
                         Toast.makeText(requireContext(), "Loading", Toast.LENGTH_LONG).show()
                     }
+                    is SharedViewModel.StateCharacter.OnCharacterSelected ->{
+                        (activity as HomeActivity).characterDetailFragment()
+                    }
                 }
             }
         }
@@ -64,7 +68,6 @@ class CharacterListFragment : Fragment(), CharacterAdapterCallback {
     }
 
     private fun setAdapter() {
-
         binding.characterList.layoutManager = LinearLayoutManager(requireContext())
         binding.characterList.adapter = adapter
     }
@@ -74,13 +77,10 @@ class CharacterListFragment : Fragment(), CharacterAdapterCallback {
     }
 
     private  fun getCharacters() {
-
         val sharedPreferences = requireContext().getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", null)
-
         viewModel.getCharacters(token.toString())
     }
-
     override fun onCharacterClicked(character: Character) {
         viewModel.selectedCharater(character)
     }

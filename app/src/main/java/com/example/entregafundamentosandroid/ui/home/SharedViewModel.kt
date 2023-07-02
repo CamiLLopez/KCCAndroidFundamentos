@@ -70,15 +70,13 @@ class SharedViewModel: ViewModel() {
                 }
             }
         }
-
-
     fun selectedCharater(character: Character){
-        //TODO go to fragement
+        _characters.value = StateCharacter.OnCharacterSelected(character)
     }
-
     sealed class StateCharacter {
         data class OnCharacterReceived(val characters: List<Character>) : StateCharacter()
         data class Error(val message: String) : StateCharacter()
+        data class OnCharacterSelected(val character: Character): StateCharacter()
         object Loading : StateCharacter()
     }
 }
