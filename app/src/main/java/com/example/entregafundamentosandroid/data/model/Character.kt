@@ -6,6 +6,6 @@ data class Character (
     val photo: String,
     val description: String,
     val maxLife: Int = 100,
-    val actualLife: Int = 100
-
-        )
+    var actualLife: Int = 100,
+    var isDead: Boolean = false
+)

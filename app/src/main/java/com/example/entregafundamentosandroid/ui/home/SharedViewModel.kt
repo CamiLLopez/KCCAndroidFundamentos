@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import kotlin.random.Random
 
 class SharedViewModel: ViewModel() {
 
@@ -73,10 +74,38 @@ class SharedViewModel: ViewModel() {
     fun selectedCharater(character: Character){
         _characters.value = StateCharacter.OnCharacterSelected(character)
     }
+    fun damageCharacter(characterSelected: Character){
+        val randomDamange = Random.nextInt(20, 60)
+        characterList.map { character ->
+            if (character.id == characterSelected.id){
+                val dead = (character.actualLife - randomDamange) <= 0
+                if (dead){
+                    character.actualLife = 0
+                    character.isDead = true
+                }else{
+                    character.actualLife = character.actualLife - randomDamange
+                }
+                updateCharacter(character)
+            }
+        }
+    }
+    fun healCharacter(characterSelected: Character){
+        characterList.map { character ->
+            if (character.id == characterSelected.id){
+                character.actualLife = character.actualLife + 20
+                updateCharacter(character)
+            }
+        }
+    }
+    fun updateCharacter(character: Character){
+        _characters.value = StateCharacter.OnCharacterUpdated(character)
+    }
+
     sealed class StateCharacter {
         data class OnCharacterReceived(val characters: List<Character>) : StateCharacter()
         data class Error(val message: String) : StateCharacter()
         data class OnCharacterSelected(val character: Character): StateCharacter()
+        data class OnCharacterUpdated(val character: Character): StateCharacter()
         object Loading : StateCharacter()
     }
 }
