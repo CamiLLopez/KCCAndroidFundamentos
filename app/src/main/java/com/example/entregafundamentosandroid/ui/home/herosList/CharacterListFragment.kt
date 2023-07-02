@@ -57,7 +57,7 @@ class CharacterListFragment : Fragment(), CharacterAdapterCallback {
                         (activity as HomeActivity).characterDetailFragment()
                     }
                     is SharedViewModel.StateCharacter.OnCharacterUpdated -> {
-                        Toast.makeText(requireContext(), "Updated ${state.character.actualLife}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), " ${state.character.name} was updated!", Toast.LENGTH_LONG).show()
                     }
                 }
             }

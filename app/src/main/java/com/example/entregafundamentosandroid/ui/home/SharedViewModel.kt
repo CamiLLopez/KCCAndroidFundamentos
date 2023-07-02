@@ -92,6 +92,9 @@ class SharedViewModel: ViewModel() {
     fun healCharacter(characterSelected: Character){
         characterList.map { character ->
             if (character.id == characterSelected.id){
+                if (character.isDead){
+                    character.isDead = false
+                }
                 character.actualLife = character.actualLife + 20
                 updateCharacter(character)
             }

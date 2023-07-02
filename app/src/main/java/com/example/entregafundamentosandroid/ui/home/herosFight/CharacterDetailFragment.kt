@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.entregafundamentosandroid.R
 import com.example.entregafundamentosandroid.data.model.Character
 import com.example.entregafundamentosandroid.databinding.FragmentCharacterViewBinding
 import com.example.entregafundamentosandroid.ui.home.SharedViewModel
@@ -47,8 +49,8 @@ class CharacterDetailFragment : Fragment() {
                         characterSelected = stateHeroDetails.character
                     }
                     is SharedViewModel.StateCharacter.OnCharacterUpdated -> {
-                        displayDetail(stateHeroDetails.character)
                         disableButton(stateHeroDetails.character)
+                        displayDetail(stateHeroDetails.character)
                     }
                     is SharedViewModel.StateCharacter.Loading -> {
                        TODO()
@@ -61,19 +63,24 @@ class CharacterDetailFragment : Fragment() {
     private fun disableButton(characterSelected: Character) {
 
         if (characterSelected.actualLife == 100){
-           binding.buttonDamage.isEnabled = true
+            binding.buttonDamage.isEnabled = true
             binding.buttonHeal.setBackgroundColor(Color.LTGRAY)
             binding.buttonHeal.isEnabled = false
+
         }
         else if(characterSelected.isDead){
             binding.buttonDamage.isEnabled = false
             binding.buttonDamage.setBackgroundColor(Color.LTGRAY)
             binding.buttonHeal.isEnabled = true
+        }else{
+            binding.buttonDamage.isEnabled = true
+            binding.buttonHeal.isEnabled = true
+            binding.buttonHeal.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.actual_life_color))
+            binding.buttonDamage.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.damage_life_color))
         }
     }
     private fun displayDetail(characterSelected: Character) {
         with(binding) {
-
             characterName.text = characterSelected.name
             characterDescription.text = characterSelected.description
             Picasso
@@ -82,17 +89,19 @@ class CharacterDetailFragment : Fragment() {
                 .resize(1240, 860)
                 .centerInside()
                 .into(characterPhoto)
-
             progressCharacterLife.progress = characterSelected.actualLife
         }
     }
     private fun setListeners() {
         binding.buttonDamage.setOnClickListener {
             viewModel.damageCharacter(characterSelected)
+            setObservers()
+            disableButton(characterSelected)
         }
         binding.buttonHeal.setOnClickListener {
             viewModel.healCharacter(characterSelected)
+            setObservers()
+            disableButton(characterSelected)
         }
     }
-
 }
