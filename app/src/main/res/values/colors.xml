@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="background_dead">#C0F2F2F2</color>
     <color name="actual_life_color">#7DC7AD</color>
     <color name="damage_life_color">#C9685D</color>
 </resources>

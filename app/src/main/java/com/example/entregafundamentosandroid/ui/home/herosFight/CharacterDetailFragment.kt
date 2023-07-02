@@ -53,9 +53,11 @@ class CharacterDetailFragment : Fragment() {
                         displayDetail(stateHeroDetails.character)
                     }
                     is SharedViewModel.StateCharacter.Loading -> {
-                       TODO()
+
                     }
-                    is SharedViewModel.StateCharacter.OnCharacterReceived -> TODO()
+                    is SharedViewModel.StateCharacter.OnCharacterReceived -> {
+
+                    }
                 }
             }
         }
